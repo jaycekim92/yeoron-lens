@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>여론 렌즈 — 프로토타입</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    background:#EEECE6; color:#23211D; line-height:1.5;
+    display:flex; justify-content:center; padding:28px 14px;
+  }
+  .app{ width:480px; max-width:100%; }
+  .brand{ display:flex; align-items:center; gap:9px; margin-bottom:14px; padding-left:2px; }
+  .logo{ width:32px;height:32px;border-radius:9px; background:#23211D; color:#fff; display:flex;align-items:center;justify-content:center; font-size:17px; }
+  .brand b{ font-size:17px; font-weight:700; } .brand span{ font-size:12px; color:#8C857A; }
+  .ask{
+    display:flex; align-items:center; gap:9px; background:#fff; border:1px solid #DAD4C8;
+    border-radius:14px; padding:12px 15px; margin-bottom:10px;
+  }
+  .ask .q{ flex:1; font-size:16px; font-weight:600; }
+  .ask .ic{ color:#A39B8D; font-size:18px; }
+  .meta{ display:flex; flex-wrap:wrap; gap:7px; align-items:center; margin-bottom:16px; padding-left:2px; }
+  .meta .t{ font-size:12px; color:#8C857A; }
+  .disc{ font-size:11.5px; color:#8A6D2E; background:#F6ECD3; padding:3px 9px; border-radius:8px; }
+  .card{ background:#fff; border:1px solid #E2DCD0; border-radius:16px; padding:17px 18px; margin-bottom:13px; }
+  .card h2{ font-size:13px; font-weight:700; color:#9A9183; letter-spacing:.02em; margin-bottom:11px; display:flex; align-items:center; gap:6px; }
+  .num{ width:18px;height:18px;border-radius:6px; background:#EEECE6; color:#6E665A; font-size:11px; display:inline-flex;align-items:center;justify-content:center; font-weight:700; }
+  .fact{ font-size:15px; color:#33302A; }
+  .heat{ float:right; font-size:11.5px; font-weight:600; color:#B5521E; background:#FBE6DC; padding:2px 9px; border-radius:8px; }
+
+  .bar{ display:flex; height:30px; border-radius:9px; overflow:hidden; margin-bottom:13px; cursor:pointer; }
+  .seg{ display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; transition:opacity .15s; }
+  .seg.dim{ opacity:.38 }
+  .s0{ background:#B98A2E } .s1{ background:#6B5FAE } .s2{ background:#3F9B82 }
+  .stance{ border:1px solid #E2DCD0; border-radius:11px; padding:12px 14px; }
+  .stance .h{ display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+  .pill{ width:11px;height:11px;border-radius:50%; flex-shrink:0; }
+  .stance .nm{ font-size:14.5px; font-weight:700; } .stance .pc{ font-size:12px; color:#8C857A; margin-left:auto; }
+  .quote{ font-size:13.5px; color:#4A463E; background:#F4F1EA; border-radius:9px; padding:9px 11px; }
+  .quote .src{ display:block; font-size:11px; color:#A39B8D; margin-top:4px; }
+
+  .plat{ display:flex; align-items:center; gap:10px; padding:9px 0; border-top:1px solid #EEEAE0; font-size:13.5px; }
+  .plat:first-of-type{ border-top:none }
+  .plat .pn{ width:74px; font-weight:600; color:#33302A; flex-shrink:0; }
+  .plat .tone{ flex:1; color:#5A554B; }
+  .plat .tr{ font-size:11.5px; padding:2px 8px; border-radius:7px; background:#EEECE6; color:#7A7264; white-space:nowrap; }
+
+  .ai{ background:#1E1C19; border-color:#1E1C19; color:#EDEAE2; }
+  .ai h2{ color:#B6AE9E } .ai .num{ background:#34302A; color:#C9C1B1 }
+  .ai .badge{ font-size:11px; font-weight:600; color:#9FD8C5; background:#1C322B; padding:2px 9px; border-radius:8px; float:right; }
+  .ai .struct{ font-size:14.5px; color:#EDEAE2; margin-bottom:13px; }
+  .fc{ display:flex; gap:9px; font-size:13.5px; margin-bottom:9px; align-items:flex-start; }
+  .fc .mk{ font-weight:800; flex-shrink:0; width:16px; } .fc .ok{ color:#6FD3AE } .fc .no{ color:#E58A7B }
+  .fc .tx{ color:#D6D1C6 } .fc .tx b{ color:#fff; font-weight:600 }
+  .miss{ font-size:13.5px; color:#D6D1C6; background:#2A2722; border-radius:9px; padding:10px 12px; margin-top:6px; }
+  .miss b{ color:#E7C06B; font-weight:600 }
+
+  .cta{ background:#fff; border:1px solid #E2DCD0; border-radius:16px; padding:16px 18px; text-align:center; }
+  .cta .live{ font-size:12px; color:#3F9B82; font-weight:600; margin-bottom:9px; }
+  .cta .live .dot{ display:inline-block;width:7px;height:7px;border-radius:50%;background:#3F9B82;margin-right:5px; animation:p 1.6s infinite }
+  @keyframes p{50%{opacity:.3}}
+  .cta button{ width:100%; background:#23211D; color:#fff; border:none; border-radius:12px; padding:13px; font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; }
+  .cta button:active{ transform:scale(.99) }
+  .chips{ display:flex; gap:7px; flex-wrap:wrap; margin-top:14px; justify-content:center; }
+  .chip{ font-size:12.5px; color:#6E665A; background:#fff; border:1px solid #DAD4C8; border-radius:20px; padding:6px 13px; cursor:pointer; }
+  .chip:hover{ background:#F4F1EA }
+  .note{ text-align:center; font-size:11.5px; color:#A39B8D; margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="brand">
+    <div class="logo">◉</div>
+    <div><b>여론 렌즈</b> <span>— 지금 사람들은 어떻게 보고 있나</span></div>
+  </div>
+
+  <div class="ask"><span class="ic">＂</span><span class="q">투표용지 부족 사태</span><span class="ic">↵</span></div>
+  <div class="meta">
+    <span class="t">방금 업데이트 · 댓글·글 12,400개 분석</span>
+    <span class="disc">이건 온라인 댓글 여론이에요 · 전체 민심과 다를 수 있음</span>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">1</span>무슨 일</h2>
+    <p class="fact">○○ 재보궐 투표 당일, 일부 투표소에서 투표용지가 조기 소진돼 유권자들이 발길을 돌렸다. 선관위는 “수요 예측 실패”라 해명했고, 추가 배부까지 지연되며 논란이 번지는 중.</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">2</span>여론 지형<span class="heat">🔥 가열 중 · 3시간새 댓글 3배</span></h2>
+    <div class="bar" id="bar">
+      <div class="seg s0" data-i="0" style="width:42%">42%</div>
+      <div class="seg s1" data-i="1" style="width:33%">33%</div>
+      <div class="seg s2" data-i="2" style="width:25%">25%</div>
+    </div>
+    <div class="stance" id="stance"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="num">3</span>어디서 끓나</h2>
+    <div class="plat"><span class="pn">아고라</span><span class="tone">책임론 중심, 분석 글·인증 사진</span><span class="tr">차분·집결</span></div>
+    <div class="plat"><span class="pn">다음 댓글</span><span class="tone">“예측을 그렇게 못하냐” 분노 압도</span><span class="tr">분노 ↑</span></div>
+    <div class="plat"><span class="pn">X</span><span class="tone">조작설 해시태그 빠르게 확산</span><span class="tr">의심 ↑↑</span></div>
+    <div class="plat"><span class="pn">스레드</span><span class="tone">“또 시작” 피로감·무관심</span><span class="tr">냉담</span></div>
+    <div class="plat"><span class="pn">디시·커뮤</span><span class="tone">밈화·조롱 콘텐츠</span><span class="tr">놀이화</span></div>
+  </div>
+
+  <div class="card ai">
+    <h2><span class="num">4</span>AI의 시선<span class="badge">심판의 시선 · 의견 아님</span></h2>
+    <p class="struct">이 논쟁은 <b style="color:#fff">‘행정 실수냐 vs 의도된 조작이냐’</b>로 갈리는데, 양쪽 다 아직 <b style="color:#E7C06B">증거가 아니라 추정</b>에 기대고 있어요.</p>
+    <div class="fc"><span class="mk ok">✓</span><span class="tx"><b>사실</b> · 용지 부족은 ○○ 등 일부 투표소에서 실제 확인됨 (선관위 공식 인정)</span></div>
+    <div class="fc"><span class="mk no">✗</span><span class="tx"><b>허위</b> · “전국 동시 발생”은 사실 아님 — 현재까진 특정 지역에 한정</span></div>
+    <div class="miss"><b>아무도 안 보는 것 →</b> 정작 ‘발길 돌린 유권자의 투표권은 어떻게 구제되나’는 거의 안 다뤄지고 있어요.</div>
+  </div>
+
+  <div class="cta">
+    <div class="live"><span class="dot"></span>지금 1,240명이 이 토픽에서 떠드는 중</div>
+    <button>이 사안, 너는 어떻게 봐? — 아고라에서 한마디</button>
+    <div class="chips">
+      <span class="chip">다른 이슈 물어보기</span>
+      <span class="chip">의대 증원</span>
+      <span class="chip">손흥민 이적설</span>
+      <span class="chip">전기요금 인상</span>
+    </div>
+    <div class="note">프로토타입 · 데모는 ‘투표용지 부족 사태’만 준비됨</div>
+  </div>
+</div>
+
+<script>
+const STANCES=[
+  {nm:"행정 무능·책임론", pc:"42% · 분노", c:"#B98A2E",
+   q:"예측을 어떻게 이렇게까지 못하냐. 선관위가 책임지고 사퇴해야.", src:"다음 댓글 · 추천 4,812"},
+  {nm:"조작·부정선거 의심", pc:"33% · 빠르게 확산", c:"#6B5FAE",
+   q:"용지가 모자랄 수가 있나? 이거 의도적인 거 아니냐.", src:"X · 리트윗 9,300"},
+  {nm:"단순 사고·과잉 경계", pc:"25% · 신중", c:"#3F9B82",
+   q:"사고는 사고고, 부정선거 프레임 씌우는 건 너무 나갔다.", src:"아고라 · 공감 2,107"}
+];
+const bar=document.getElementById('bar'), stance=document.getElementById('stance');
+function render(i){
+  const s=STANCES[i];
+  stance.innerHTML=
+    '<div class="h"><span class="pill" style="background:'+s.c+'"></span><span class="nm">'+s.nm+'</span><span class="pc">'+s.pc+'</span></div>'+
+    '<div class="quote">“'+s.q+'”<span class="src">'+s.src+'</span></div>';
+  [...bar.children].forEach((e,k)=>e.classList.toggle('dim',k!=i));
+}
+[...bar.children].forEach(e=>e.onclick=()=>render(+e.dataset.i));
+render(0);
+[...bar.children].forEach(e=>e.classList.remove('dim'));
+document.querySelector('.cta button').onclick=()=>alert("아고라 토픽으로 이동 →\n(프로토타입에선 연결만 표시)");
+</script>
+</body>
+</html>
