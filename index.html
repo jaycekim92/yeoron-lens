@@ -7,20 +7,23 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    background:#EEECE6;color:#23211D;min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:28px 14px}
-  .phone{width:400px;max-width:100%;height:740px;background:#F7F5F0;border-radius:30px;border:1px solid #DAD4C8;
+    background:#EEECE6;color:#23211D;min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:24px 14px}
+  .phone{width:400px;max-width:100%;height:790px;background:#F7F5F0;border-radius:30px;border:1px solid #DAD4C8;
     box-shadow:0 14px 44px rgba(50,40,20,.13);overflow:hidden;display:flex;flex-direction:column}
-  .hdr{display:flex;align-items:center;gap:10px;padding:16px 18px;background:#fff;border-bottom:1px solid #EAE3D5}
+  .hdr{display:flex;align-items:center;gap:10px;padding:15px 18px;background:#fff;border-bottom:1px solid #EAE3D5}
   .logo{width:34px;height:34px;border-radius:9px;background:#23211D;color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px}
   .hn{font-size:16px;font-weight:700} .hs{font-size:12px;color:#9A9183}
   .chat{flex:1;overflow-y:auto;padding:18px 15px 6px;display:flex;flex-direction:column;gap:11px;scroll-behavior:smooth}
   .row{display:flex} .row.me{justify-content:flex-end}
-  .bub{max-width:86%;padding:11px 14px;border-radius:17px;font-size:15px;line-height:1.58;word-break:keep-all}
+  .bub{max-width:88%;padding:11px 14px;border-radius:17px;font-size:15px;line-height:1.58;word-break:keep-all}
   .bub.bot{background:#fff;border:1px solid #E7E1D4;border-bottom-left-radius:6px}
   .bub.me{background:#2E2A24;color:#F2EEE4;border-bottom-right-radius:6px}
   .bub b{font-weight:700}
-  .ok{color:#2E8B6E;font-weight:800} .no{color:#C75B45;font-weight:800} .miss{color:#9A6A12;font-weight:700}
-  .typing{display:flex;gap:4px;padding:13px 15px} .typing span{width:7px;height:7px;border-radius:50%;background:#C9C0AE;animation:bl 1.2s infinite both}
+  .ok{color:#2E8B6E;font-weight:800}.no{color:#C75B45;font-weight:800}.miss{color:#9A6A12;font-weight:700}
+  .src{display:block;font-size:11px;color:#A39B8D;margin-top:3px}
+  hr{border:none;border-top:1px solid #EEE8DC;margin:9px 0}
+  .me-mark{display:inline-block;font-size:10.5px;font-weight:700;color:#fff;background:#2E2A24;border-radius:6px;padding:1px 7px;margin-right:5px}
+  .typing{display:flex;gap:4px;padding:13px 15px}.typing span{width:7px;height:7px;border-radius:50%;background:#C9C0AE;animation:bl 1.2s infinite both}
   .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
   @keyframes bl{0%,80%,100%{opacity:.3}40%{opacity:1}}
   .tag{display:inline-block;font-size:10.5px;font-weight:700;color:#7A5A12;background:#F3E7CF;padding:2px 8px;border-radius:7px;margin-bottom:7px}
@@ -28,7 +31,6 @@
   .geo{margin-top:9px;border:1px solid #ECE6DA;border-radius:11px;overflow:hidden}
   .geo .bar{display:flex;height:26px}
   .geo .sg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
-  .s0{background:#B98A2E}.s1{background:#6B5FAE}.s2{background:#3F9B82}
   .geo .lg{display:flex;flex-direction:column;gap:5px;padding:10px 11px}
   .geo .li{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#4A463E}
   .geo .dt{width:9px;height:9px;border-radius:50%;flex-shrink:0}
@@ -38,12 +40,19 @@
   .traj .leg{display:flex;gap:14px;justify-content:center;font-size:11.5px;color:#5A554B;margin-top:4px}
   .traj .leg i{display:inline-block;width:16px;height:3px;border-radius:2px;vertical-align:middle;margin-right:4px}
 
-  .chips{padding:8px 15px 14px;display:flex;flex-wrap:wrap;gap:8px;background:#fff;border-top:1px solid #EAE3D5}
-  .chip{font-size:13.5px;color:#33302A;background:#F2EFE8;border:1px solid #DDD6C8;border-radius:20px;padding:9px 13px;cursor:pointer;font-family:inherit}
-  .chip:hover{background:#E9E4D8} .chip:active{transform:scale(.98)}
+  .chips{padding:7px 14px 6px;display:flex;flex-wrap:wrap;gap:7px;background:#fff}
+  .chip{font-size:13px;color:#33302A;background:#F2EFE8;border:1px solid #DDD6C8;border-radius:20px;padding:8px 12px;cursor:pointer;font-family:inherit}
+  .chip:hover{background:#E9E4D8}.chip:active{transform:scale(.98)}
+  .chip.mine{background:#FBF1DC;border-color:#E7D08A;color:#7A5A12;font-weight:600}
+  .chip.alt{background:#E3F0EC;border-color:#BFE0D4;color:#2E6E5A;font-weight:600}
   .chip.person{background:#EDEAF6;border-color:#CFC7EC;color:#4A3F8C;font-weight:600}
   .chip.go{background:#2E2A24;color:#fff;border-color:#2E2A24;font-weight:600}
-  .disc{font-size:11px;color:#A39B8D;padding:0 16px 4px;background:#fff;text-align:center}
+  .disc{font-size:11px;color:#A39B8D;padding:2px 16px 0;background:#fff;text-align:center}
+  .inbar{display:flex;gap:8px;padding:9px 13px 13px;background:#fff;border-top:1px solid #F0EADE}
+  .inbar input{flex:1;border:1px solid #DDD6C8;border-radius:21px;padding:11px 15px;font-size:14px;font-family:inherit;outline:none;background:#F7F5F0;color:#23211D}
+  .inbar input:focus{border-color:#B98A2E;background:#fff}
+  .inbar button{border:none;background:#2E2A24;color:#fff;border-radius:50%;width:42px;height:42px;font-size:17px;cursor:pointer;flex-shrink:0}
+  .inbar button:active{transform:scale(.95)}
 </style>
 </head>
 <body>
@@ -53,21 +62,134 @@
     <div><div class="hn">여론 렌즈</div><div class="hs">지금 사람들은 어떻게 보고 있나</div></div>
   </div>
   <div class="chat" id="chat"></div>
-  <div class="disc" id="disc" style="display:none">온라인 댓글 여론 기준 · 전체 민심과 다를 수 있어요</div>
+  <div class="disc" id="disc" style="display:none">온라인 여론(댓글·아고라·카페·티스토리) 기준 · 전체 민심과 다를 수 있어요</div>
   <div class="chips" id="chips"></div>
+  <div class="inbar">
+    <input id="inp" type="text" placeholder="이슈나 인물을 직접 물어보세요…" autocomplete="off">
+    <button id="send" aria-label="보내기">↑</button>
+  </div>
 </div>
 
 <script>
-const GEO=
-  '<div class="geo"><div class="bar"><div class="sg s0" style="width:42%">42</div><div class="sg s1" style="width:33%">33</div><div class="sg s2" style="width:25%">25</div></div>'+
-  '<div class="lg">'+
-  '<div class="li"><span class="dt" style="background:#B98A2E"></span>행정 무능·책임론<span class="pc">42% · 분노</span></div>'+
-  '<div class="li"><span class="dt" style="background:#6B5FAE"></span>조작·부정선거 의심<span class="pc">33% · 확산</span></div>'+
-  '<div class="li"><span class="dt" style="background:#3F9B82"></span>단순 사고·과잉 경계<span class="pc">25% · 신중</span></div>'+
-  '</div></div>';
+const chat=document.getElementById('chat'), chipsEl=document.getElementById('chips'), disc=document.getElementById('disc');
+const inp=document.getElementById('inp'), sendBtn=document.getElementById('send');
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function scrollB(){chat.scrollTop=chat.scrollHeight}
+function me(t){const r=document.createElement('div');r.className='row me';r.innerHTML='<div class="bub me">'+t+'</div>';chat.appendChild(r);scrollB()}
+async function bot(html){
+  const tp=document.createElement('div');tp.className='row';tp.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
+  chat.appendChild(tp);scrollB();await wait(700);tp.remove();
+  const r=document.createElement('div');r.className='row';r.innerHTML='<div class="bub bot">'+html+'</div>';chat.appendChild(r);scrollB();
+}
+function ctaBubble(html,fn,style){const r=document.createElement('div');r.className='row';
+  r.innerHTML='<div class="bub bot" style="cursor:pointer;'+(style||'')+'">'+html+'</div>';
+  r.onclick=fn;chat.appendChild(r);scrollB();}
+function setChips(items){chipsEl.innerHTML='';items.forEach(it=>{const c=document.createElement('div');
+  c.className='chip '+(it.cls||'');c.textContent=it.label;c.onclick=it.fn;chipsEl.appendChild(c);});}
+function voicesHTML(list){return list.map(v=>'“'+v.t+'”<span class="src">'+v.src+'</span>').join('<hr>');}
 
-const TRAJ=
-  '<div class="traj"><svg viewBox="0 0 344 150" width="100%">'+
+/* ===== CASE 1. 투표용지 — 여러 갈래 ===== */
+const GEO='<div class="geo"><div class="bar">'+
+  '<div class="sg" style="width:42%;background:#B98A2E">42</div>'+
+  '<div class="sg" style="width:33%;background:#6B5FAE">33</div>'+
+  '<div class="sg" style="width:25%;background:#3F9B82">25</div></div>'+
+  '<div class="lg">'+
+  '<div class="li"><span class="dt" style="background:#B98A2E"></span>행정 무능·책임론<span class="pc">42%</span></div>'+
+  '<div class="li"><span class="dt" style="background:#6B5FAE"></span>조작·부정선거 의심<span class="pc">33%</span></div>'+
+  '<div class="li"><span class="dt" style="background:#3F9B82"></span>단순 사고·과잉 경계<span class="pc">25%</span></div>'+
+  '</div></div>';
+const VOTE=[
+  {nm:'행정 책임론',pct:42,judge:'<b>뉴스 댓글에선 네가 다수파</b>예요. 근데 카페·티스토리 긴 글에선 조작론이 더 세요.',trend:'어제보다 +6%p — 책임론 쪽으로 쏠리는 중.',
+   same:[{t:'예측을 그렇게 못하냐, 선관위 책임져라',src:'뉴스 댓글 · 추천 4,812'},{t:'명백한 행정 실패다',src:'아고라 · 공감 980'}],
+   opp:[{t:'용지가 모자랄 수가 있나? 의도 아니냐',src:'티스토리 · 논평글'}]},
+  {nm:'조작 의심',pct:33,judge:'<b>티스토리 긴 글·일부 카페에선 센 목소리</b>지만, 뉴스 댓글 전체에선 소수예요.',trend:'어제보다 +4%p — 빠르게 확산 중.',
+   same:[{t:'용지가 모자랄 수가 있나? 의도적이다',src:'티스토리 · 논평글'},{t:'CCTV부터 공개해라',src:'카페 · 게시글 320'}],
+   opp:[{t:'사고를 조작으로 모는 건 과하다',src:'아고라 · 공감 2,107'}]},
+  {nm:'신중·과잉 경계',pct:25,judge:'어디서도 다수는 아니지만 <b>아고라에선 존재감</b>이 있어요.',trend:'어제보다 -3%p.',
+   same:[{t:'사고는 사고고, 프레임 씌우지 말자',src:'아고라 · 공감 2,107'}],
+   opp:[{t:'이렇게 넘어가면 다음에 또 터진다',src:'뉴스 댓글 · 추천 3,100'}]},
+];
+const QA={
+  fact:{q:'조작설, 근거 있어?',a:'<span class="ok">✓ 사실</span> — 용지 부족은 진짜. 선관위도 인정.<br><span class="no">✗ 허위</span> — “전국 동시 발생”은 사실 아님. 특정 지역 한정.<br>정리하면 <b>‘사고는 진짜, 전국 조작은 비약’</b>.'},
+  plat:{q:'댓글이랑 카페·티스토리는 분위기가 달라?',a:'같은 사건도 다음 안에서 소스마다 톤이 달라요 —<br>· <b>뉴스 댓글</b>: 즉각 분노·책임론<br>· <b>아고라</b>: 분석·인증 글<br>· <b>카페</b>: 생활 체감·실용 걱정<br>· <b>티스토리</b>: 긴 논평·해설<br><b>한 소스만 보면 여론을 오해해요.</b>'},
+};
+async function voteOpen(){
+  await bot('한창 끓는 중이에요 🔥 3시간 새 댓글 3배. 크게 <b>세 갈래</b>로 갈렸어요 —'+GEO);
+  disc.style.display='block';
+  await bot('어떻게 볼까요? (직접 입력해도 돼요)');
+  voteMenu();
+}
+function voteMenu(){
+  setChips([
+    {label:'🙋 난 어떤 입장이지?',cls:'mine',fn:pickStance},
+    {label:QA.fact.q,fn:()=>qa('fact')},
+    {label:QA.plat.q,fn:()=>qa('plat')},
+    {label:'🩺 의대 증원은? (찬반)',cls:'alt',fn:()=>{me('의대 증원, 사람들 찬반 어때?');medOpen();}},
+    {label:'👤 조국이라는 사람은?',cls:'person',fn:()=>{me('조국이라는 인물은 사람들이 어떻게 봐?');personOpen();}},
+  ]);
+}
+async function qa(k){me(QA[k].q);chipsEl.innerHTML='';await bot(QA[k].a);voteMenu();}
+async function pickStance(){
+  me('난 어떻게 보는 거지?');chipsEl.innerHTML='';
+  await bot('하나만 골라봐요. 네 생각에 제일 가까운 거:');
+  setChips(VOTE.map((s,i)=>({label:s.nm,fn:()=>stancePos(i)})));
+}
+async function stancePos(i){
+  const s=VOTE[i];me(s.nm+' 쪽이야');chipsEl.innerHTML='';
+  await bot('<span class="me-mark">내 자리</span>너는 <b>'+s.nm+'</b> · 지금 '+s.pct+'%.<br>'+s.judge+'<br><span style="color:#8C857A">'+s.trend+'</span>');
+  setChips([
+    {label:'🤝 나랑 같은 생각 듣기',cls:'mine',fn:()=>voices(i,'same')},
+    {label:'😤 반대편은 뭐래?',fn:()=>voices(i,'opp')},
+    {label:'나도 한마디 →',cls:'go',fn:()=>joinAgora(s.nm)},
+  ]);
+}
+async function voices(i,which){
+  const s=VOTE[i];me(which==='same'?'나랑 같은 생각 듣고 싶어':'반대편은 뭐래?');chipsEl.innerHTML='';
+  await bot(voicesHTML(which==='same'?s.same:s.opp));
+  setChips([
+    {label:which==='same'?'😤 반대편은?':'🤝 같은 생각은?',fn:()=>voices(i,which==='same'?'opp':'same')},
+    {label:'나도 한마디 →',cls:'go',fn:()=>joinAgora(s.nm)},
+    {label:'처음으로',fn:reset},
+  ]);
+}
+
+/* ===== CASE 2. 의대 증원 — 찬반 ===== */
+const MED={
+  bar:'<div class="geo"><div class="bar">'+
+    '<div class="sg" style="width:38%;background:#3F9B82">찬성 38</div>'+
+    '<div class="sg" style="width:62%;background:#B98A2E">반대 62</div></div></div>',
+  pro:{nm:'찬성',pct:38,judge:'<b>너는 소수파</b>예요. 근데 2030 세대에선 찬성이 더 많아요.',
+    same:[{t:'지방 의료 붕괴, 늘리는 게 맞다',src:'아고라 · 공감 1,540'}],
+    opp:[{t:'숫자만 늘리면 의료 질 떨어진다',src:'다음 댓글 · 추천 6,200'}]},
+  con:{nm:'반대',pct:62,judge:'<b>너가 다수파</b>예요. 특히 다음 댓글에서 강해요.',
+    same:[{t:'수가부터 손봐라, 증원은 답 아니다',src:'다음 댓글 · 추천 6,200'}],
+    opp:[{t:'지방엔 의사가 없다, 늘려야 한다',src:'아고라 · 공감 1,540'}]},
+};
+async function medOpen(){
+  chipsEl.innerHTML='';
+  await bot('이건 딱 <b>찬반으로 갈리는</b> 사안이에요 —'+MED.bar);
+  await bot('넌 어느 쪽이야? <b>딱 한 번</b>만 누르면 네 자리 보여줄게.');
+  setChips([
+    {label:'👍 찬성',cls:'alt',fn:()=>medPos('pro')},
+    {label:'👎 반대',cls:'mine',fn:()=>medPos('con')},
+  ]);
+}
+async function medPos(k){
+  const m=MED[k];me(m.nm+'이야');chipsEl.innerHTML='';
+  await bot('<span class="me-mark">내 자리</span>너는 <b>'+m.nm+'</b> · '+m.pct+'%.<br>'+m.judge);
+  setChips([
+    {label:'🤝 같은 편 목소리',cls:'mine',fn:async()=>{me('같은 편은?');chipsEl.innerHTML='';await bot(voicesHTML(m.same));medAfter(k);}},
+    {label:'😤 반대편 목소리',fn:async()=>{me('반대편은?');chipsEl.innerHTML='';await bot(voicesHTML(m.opp));medAfter(k);}},
+    {label:'나도 한마디 →',cls:'go',fn:()=>joinAgora(m.nm)},
+  ]);
+}
+function medAfter(k){setChips([
+  {label:'나도 한마디 →',cls:'go',fn:()=>joinAgora(MED[k].nm)},
+  {label:'처음으로',fn:reset},
+]);}
+
+/* ===== CASE 3. 조국 — 인물 ===== */
+const TRAJ='<div class="traj"><svg viewBox="0 0 344 150" width="100%">'+
   '<line x1="92" y1="16" x2="92" y2="120" stroke="#D9D2C4" stroke-dasharray="3 3"/>'+
   '<line x1="192" y1="16" x2="192" y2="120" stroke="#D9D2C4" stroke-dasharray="3 3"/>'+
   '<line x1="288" y1="16" x2="288" y2="120" stroke="#D9D2C4" stroke-dasharray="3 3"/>'+
@@ -77,62 +199,48 @@ const TRAJ=
   '<polyline fill="none" stroke="#B07A2E" stroke-width="2.5" points="20,42 92,36 140,33 192,34 240,31 288,30 332,29"/>'+
   '<polyline fill="none" stroke="#6B5FAE" stroke-width="2.5" points="20,70 92,74 140,68 192,66 240,63 288,56 332,58"/>'+
   '</svg><div class="leg"><span><i style="background:#B07A2E"></i>강성 비판</span><span><i style="background:#6B5FAE"></i>강성 지지</span></div></div>';
+async function personOpen(){
+  chipsEl.innerHTML='';
+  await bot('<span class="tag">인물 렌즈 · 여러 이슈를 묶어서</span>여론이 <b>극단적으로 양분</b>돼 있고, 더 흥미로운 건 <b>거의 안 움직여요.</b>'+TRAJ);
+  await bot('제 해석(인물 평가 아니라 구조 읽기): 이 여론은 <b>인물보다 ‘진영 정체성의 대리전’</b>에 가까워요. 그래서 뭐가 터져도 호감도가 안 바뀌어요. <span class="miss">설득이 아니라 정체성의 문제</span>가 된 상태.');
+  ctaBubble('🔔 이 인물 팔로우 — 여론 바뀌면 알려줄게',()=>alert('팔로우 등록 →\n여론 궤적이 변곡점을 찍으면 알림\n(프로토타입에선 표시만)'),'background:#EDEAF6;border-color:#CFC7EC;color:#4A3F8C');
+  setChips([{label:'처음으로',fn:reset}]);
+}
 
-const QA={
-  fact:{ q:"조작설, 근거 있는 거야?",
-    a:'지금 도는 근거 두 개만 짚을게요.<br><span class="ok">✓ 사실</span> — 용지 부족 자체는 진짜예요. 선관위도 인정, ○○ 등 일부 투표소에서 확인.<br><span class="no">✗ 허위</span> — “전국 동시 발생”은 사실이 아니에요. 지금까진 특정 지역 한정.<br>정리하면 <b>‘사고는 진짜, 전국 조작은 비약’</b>에 가까워요.' },
-  plat:{ q:"X랑 다음은 왜 분위기가 달라?",
-    a:'같은 사건인데 보는 각이 달라요.<br>· <b>다음 댓글</b>: “예측을 그렇게 못하냐” 행정 책임론 압도<br>· <b>X</b>: 조작설 해시태그 빠르게 확산<br>· <b>스레드</b>: “또 시작” 피로감<br>그래서 <b>한 곳만 보면 여론을 오해해요.</b>' },
-  think:{ q:"넌 어떻게 생각해?",
-    a:'제 역할은 편드는 게 아니라 판을 정리하는 거라 — 솔직히 지금 <b>양쪽 다 ‘증거’가 아니라 ‘추정’으로</b> 싸우고 있어요.<br>정작 중요한 건 아무도 안 봐요: <span class="miss">못 찍고 돌아간 유권자의 투표권은 어떻게 구제되나.</span>' },
-};
+/* ===== 참여 ===== */
+async function joinAgora(stance){
+  me('나도 한마디 하고 싶어');chipsEl.innerHTML='';
+  await bot('네 입장(<b>'+stance+'</b>)으로 아고라에 1,240명이 떠들고 있어요. 처음이면 이렇게 — “'+stance+', 근데 못 찍고 돌아간 표는 어쩔 건데?”');
+  ctaBubble('＋ 아고라에 이 글 올리기',()=>alert('아고라 토픽으로 이동 →\n(프로토타입에선 연결만 표시)'),'background:#2E2A24;color:#fff;border-color:#2E2A24');
+  setChips([{label:'처음으로',fn:reset}]);
+}
 
-const chat=document.getElementById('chat'), chips=document.getElementById('chips'), disc=document.getElementById('disc');
-let asked=new Set(), personDone=false;
-function scroll(){chat.scrollTop=chat.scrollHeight}
-function me(t){const r=document.createElement('div');r.className='row me';r.innerHTML='<div class="bub me">'+t+'</div>';chat.appendChild(r);scroll()}
-function bot(html,cb){
-  const tp=document.createElement('div');tp.className='row';tp.innerHTML='<div class="typing"><span></span><span></span><span></span></div>';
-  chat.appendChild(tp);scroll();
-  setTimeout(()=>{tp.remove();const r=document.createElement('div');r.className='row';r.innerHTML='<div class="bub bot">'+html+'</div>';chat.appendChild(r);scroll();cb&&cb()},800);
+/* ===== 입력 라우팅 ===== */
+async function fallback(){
+  await bot('지금은 <b>프로토타입</b>이라 준비된 주제만 진짜로 답해요 — <b>투표용지 부족 · 의대 증원 · 조국</b>. (실제 버전은 뭘 물어도 같은 방식으로 여론 지형을 펼쳐줘요.)');
+  setChips([
+    {label:'투표용지 부족',fn:()=>{me('투표용지 부족 사태 어때?');voteOpen();}},
+    {label:'의대 증원',cls:'alt',fn:()=>{me('의대 증원 찬반 어때?');medOpen();}},
+    {label:'조국',cls:'person',fn:()=>{me('조국은 사람들이 어떻게 봐?');personOpen();}},
+  ]);
 }
-function personFlow(){
-  personDone=true;me("사건 말고 — 조국이라는 인물은 사람들이 어떻게 봐?");chips.innerHTML='';
-  bot('<span class="tag">인물 렌즈 · 여러 이슈를 묶어서</span>여론이 <b>극단적으로 양분</b>돼 있어요. 더 흥미로운 건 — <b>거의 안 움직여요.</b> 새 이슈가 터져도 두 진영 다 자리를 안 떠요.'+TRAJ, ()=>{
-    setTimeout(()=>bot('제 해석은 이래요(인물 평가 아니라 구조 읽기예요): 이 인물 여론은 <b>인물 자체보다 ‘진영 정체성의 대리전’</b>에 가까워요. 그래서 입시 의혹이든 정계 복귀든, 호감도가 거의 안 바뀌는 거죠. <span class="miss">설득의 문제가 아니라 정체성의 문제</span>가 된 상태.',()=>{
-      setTimeout(()=>{const r=document.createElement('div');r.className='row';
-        r.innerHTML='<div class="bub bot" style="background:#EDEAF6;border-color:#CFC7EC;color:#4A3F8C;cursor:pointer">🔔 이 인물 팔로우 — 여론 바뀌면 알려줄게</div>';
-        r.onclick=()=>alert("팔로우 등록 →\n여론 궤적이 변곡점을 찍으면 알림\n(프로토타입에선 표시만)");
-        chat.appendChild(r);scroll();renderChips()},350);
-    }));
-  });
+function route(text){
+  const t=(text||'').trim();if(!t)return;
+  me(t);inp.value='';
+  if(/투표|용지|개표|선거/.test(t)) return voteOpen();
+  if(/의대|증원|의사|의료/.test(t)) return medOpen();
+  if(/조국/.test(t)) return personOpen();
+  return fallback();
 }
-function renderChips(){
-  chips.innerHTML='';
-  Object.keys(QA).forEach(k=>{ if(asked.has(k))return;
-    const c=document.createElement('div');c.className='chip';c.textContent=QA[k].q;
-    c.onclick=()=>{asked.add(k);me(QA[k].q);chips.innerHTML='';bot(QA[k].a,()=>setTimeout(renderChips,300))};
-    chips.appendChild(c);
-  });
-  if(!personDone){
-    const p=document.createElement('div');p.className='chip person';p.textContent='👤 조국 — 이 사람 자체는?';
-    p.onclick=personFlow;chips.appendChild(p);
-  }
-  const g=document.createElement('div');g.className='chip go';g.textContent='나도 한마디 →';
-  g.onclick=()=>{me("나도 한마디 하고 싶어");chips.innerHTML='';
-    bot('지금 아고라에 <b>1,240명</b>이 떠들고 있어요. 처음이면 이렇게 — “조작이든 실수든, 못 찍고 돌아간 표는 어쩔 건데?”',()=>{
-      setTimeout(()=>{const r=document.createElement('div');r.className='row';
-        r.innerHTML='<div class="bub bot" style="background:#2E2A24;color:#fff;border-color:#2E2A24;cursor:pointer">＋ 아고라에 이 글 올리기</div>';
-        r.onclick=()=>alert("아고라 토픽으로 이동 →\n(프로토타입에선 연결만 표시)");
-        chat.appendChild(r);scroll();renderChips()},300);
-    });
-  };
-  chips.appendChild(g);
+sendBtn.onclick=()=>route(inp.value);
+inp.addEventListener('keydown',e=>{if(e.key==='Enter')route(inp.value);});
+
+function reset(){chat.innerHTML='';start();}
+async function start(){
+  me('투표용지 부족 사태, 지금 사람들 분위기 어때?');
+  await voteOpen();
 }
-me("투표용지 부족 사태, 지금 사람들 분위기 어때?");
-bot('한창 끓는 중이에요 🔥 3시간 새 댓글이 3배 늘었어요. 크게 세 갈래로 갈렸어요 —'+GEO,()=>{
-  setTimeout(()=>bot('어느 게 제일 궁금해요?',()=>{disc.style.display='block';renderChips()}),400);
-});
+start();
 </script>
 </body>
 </html>
